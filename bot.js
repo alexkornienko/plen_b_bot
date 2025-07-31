@@ -12,6 +12,23 @@ bot.onText(/\/start/, (msg) => {
   );
 });
 
+bot.onText(/\/help/, (msg) => {
+  const helpMessage = `
+Доступные команды:
+/start - Приветствие и информация
+/help - Список команд
+/next - Узнать дату и время следующей репетиции
+  `;
+  bot.sendMessage(msg.chat.id, helpMessage);
+});
+
+bot.onText(/\/next/, (msg) => {
+  bot.sendMessage(
+    msg.chat.id,
+    "Следующая репетиция — в субботу в 21:00. Не забудьте подготовиться!"
+  );
+});
+
 // Еженедельное напоминание (каждую пятницу в 10:25)
 cron.schedule("25 10 * * 5", () => {
   bot.sendMessage(
