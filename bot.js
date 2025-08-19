@@ -19,6 +19,7 @@ let skipNextReminder = false;
 
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
+
   const welcomeText = `Всем привет! Меня зовут Геннадий Напоминалов.  
 Я буду напоминать о репетиции раз в неделю.  
 
@@ -139,6 +140,18 @@ cron.schedule(
       process.env.CHAT_ID,
       "📅 Напоминание: в субботу репетиция в 21:00! Если у кого-то поменялись планы, сообщите об этом."
     );
+  },
+  { timezone: "Europe/Moscow" }
+);
+
+cron.schedule(
+  "00 21 * * 6",
+  () => {
+    if (skipNextReminder) {
+      console.log("Напоминание восстановлено");
+      skipNextReminder = false;
+      return;
+    }
   },
   { timezone: "Europe/Moscow" }
 );
